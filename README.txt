@@ -1,12 +1,17 @@
-This program was tested and runs on flip3. Make sure you're using flip3.
+Beaver-chat Messaging System
 
-First, run the server by typing python chatServer.py [port #] Where port # is the number of the port you want
-to run the server on.
+Description: p2p messaging systems that allows communication between students while connected to the OSU Unix servers.
 
-Next, in a separate connection window, type make to generate the executable for the client.
+Use instructions------------------------------------------------------------------------------------------------------
 
-Then run ./chatClient [flip3] [port #] where port # is the same port you specified for the server.
+Set up server (user1):
+While logged into OSU flip servers, run command: python chatserve.py [port#]
 
-Important: first message must be sent from the client.
+Set up client (user2):
+Run command: make 
+Run command: ./chatclient [flip#] [port#] -- flip# and port# must match server
 
-At any time (from the correct prompt, since the client and server alternate messages), type \quit to end the program
+Future updates: 
+-group chats
+-file sharing
+-persistent server
