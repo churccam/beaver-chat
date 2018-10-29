@@ -15,10 +15,12 @@ def chat(chatConnection, client_username, server_username):
     while 1:
         # process incoming message
         message_incoming = chatConnection.recv(501) # get incoming message
+
+        print("Message incoming:" + str(ord(message_incoming)))
+
         if message_incoming == "":
             print("\nChat connection ended-----\nWaiting for new chat connection...\n")
             break
-
         print("{}> {}".format(client_username, message_incoming))
 
         # process outgoing message
@@ -70,6 +72,7 @@ if __name__ == "__main__":
     while 1:
         connectionSocket, address = serverSocket.accept()  # new socket for chat
         print("Connected on address {}".format(address))
+
 
         # exchange usernames
         username_client = exchangeNames(connectionSocket, username_server)

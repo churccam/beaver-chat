@@ -69,16 +69,16 @@ void chat(int socket_chat, char * username_client, char * username_server) {
     memset(incoming_msg, 0, sizeof(incoming_msg));
     memset(outgoing_msg, 0, sizeof(outgoing_msg));
 
-    //fgets(outgoing_msg, 500, stdin);
 
     while(1){
-        printf("%s> ", username_client);
+        printf("\nInput message: ");
         fgets(outgoing_msg ,500, stdin);
 
         if (strcmp(outgoing_msg, "\\quit\n") == 0){
             break;
         }
 
+		//combine name and message
         bytes = send(socket_chat, outgoing_msg, strlen(outgoing_msg), 0);
 
         if(bytes == -1){
@@ -108,7 +108,7 @@ void chat(int socket_chat, char * username_client, char * username_server) {
     printf("\nConnection to server - CLOSED\n");
 }
 
-
+// MAIN FUNCTION ------------------------------
     int main(int argc, char *argv[]) {
     if(argc != 3){
         printf("\nError: Incorrect arguments\nCorrect format: ./chatclient [FLIP2] [Port#]\n");
@@ -118,6 +118,7 @@ void chat(int socket_chat, char * username_client, char * username_server) {
     char username_client [10]; // user supplied username
     char username_server [10]; // server username
 
+	//get username from client user
     printf("Enter your chat username (1-10 chars): ");
     scanf("%s", username_client);
 
