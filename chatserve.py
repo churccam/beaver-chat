@@ -6,6 +6,7 @@ Resources used:
 https://docs.python.org/2/howto/sockets.html
 https://docs.python.org/release/2.6.5/library/socket.html#module-socket
 https://beej.us/guide/bgnet/html/single/bgnet.html#accept
+https://pymotw.com/2/socket/tcp.html
 '''
 
 import sys
@@ -73,7 +74,6 @@ if __name__ == "__main__":
         print("----------connected to client----------")
 
         print("Connected on address {}".format(address))
-
 
         # exchange usernames
         username_client = exchangeNames(connectionSocket, username_server)

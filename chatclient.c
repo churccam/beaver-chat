@@ -4,6 +4,8 @@
  *
  * Resources used:
  * https://beej.us/guide/bgnet/html/single/bgnet.html#accept
+ * https://www.geeksforgeeks.org/socket-programming-cc/
+ * http://www.cs.rpi.edu/~moorthy/Courses/os98/Pgms/socket.html
  */
 
 #include <stdio.h>
@@ -17,6 +19,8 @@
 #include <arpa/inet.h>
 #include <netdb.h>
 
+// createAddress()
+// generate addrinfo object to hold server address
 struct addrinfo* createAddress(char* address, char* port) {
     struct addrinfo hints;
     struct addrinfo *server_info;
@@ -27,39 +31,48 @@ struct addrinfo* createAddress(char* address, char* port) {
     hints.ai_socktype = SOCK_STREAM;
 
     if((status = getaddrinfo(address, port, &hints, &server_info)) != 0){
-        printf("\nError creating server address information\n");
+        printf("\nError - creating server address object\n");
         exit(1);
     }
 
     return server_info;
 }
 
+
+// createSocket()
+// create a new socket with server address 
 int createSocket(struct addrinfo* server_info) {
     int socket_status;
 
     if ((socket_status = socket(server_info->ai_family, server_info->ai_socktype, server_info->ai_protocol)) == -1){
-        printf("\nError creating socket\n");
+        printf("\nError - creating socket\n");
         exit(1);
     }
 
     return socket_status;
 }
 
+// connect_socket()
+// connect socket with server
 void connect_socket(int socket_chat, struct addrinfo * serverAddr) {
     int connection_status;
 
     if ((connection_status = connect(socket_chat, serverAddr->ai_addr, serverAddr->ai_addrlen)) == -1){
-        printf("\nError connecting socket.\n");
+        printf("\nError - connecting socket.\n");
         exit(1);
     }
 }
 
+//exchangeNames
+//send/recieve usernames
 void exchangeNames(int socket_chat, char* username_client, char* username_server) {
 
     int send_client_username = send(socket_chat, username_client, strlen(username_client), 0);
     int get_server_username = recv(socket_chat, username_server, 10, 0);
 }
 
+//chat()
+//allow users to send messages back and forth
 void chat(int socket_chat, char * username_client, char * username_server) {
     int bytes = 0;
     int status;
@@ -80,18 +93,18 @@ void chat(int socket_chat, char * username_client, char * username_server) {
             break;
         }
 
-		//combine name and message
+		//send message 
         bytes = send(socket_chat, outgoing_msg, strlen(outgoing_msg), 0);
 
         if(bytes == -1){
-            printf("\nError sending message - message data lost");
+            printf("\nError sending message - data loss");
             exit(1);
         }
 
         status = recv(socket_chat, incoming_msg, 500, 0);
 
         if (status == -1){
-            printf("\nError - message not received properly.\n");
+            printf("\nError - receiving message.\n");
             exit(1);
         }
         else if (status == 0){
