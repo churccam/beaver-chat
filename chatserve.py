@@ -16,12 +16,10 @@ def chat(chatConnection, client_username, server_username):
         # process incoming message
         message_incoming = chatConnection.recv(501) # get incoming message
 
-        print("Message incoming:" + str(ord(message_incoming)))
-
         if message_incoming == "":
-            print("\nChat connection ended-----\nWaiting for new chat connection...\n")
+            print("\n--------------------Chat connection ended--------------------\nWaiting for new chat connection...\n")
             break
-        print("{}> {}".format(client_username, message_incoming))
+        print("\n{}> {}".format(client_username, message_incoming))
 
         # process outgoing message
         message_outgoing = ""
@@ -29,7 +27,7 @@ def chat(chatConnection, client_username, server_username):
             message_outgoing = raw_input("{}> ".format(server_username))
 
         if message_outgoing == "\quit":
-            print("\nEnding chat connection...\nWaiting for new chat connection...\n")
+            print("\n----------Ending chat connection...----------\n----------Waiting for new chat connection...----------\n")
             break
 
         chatConnection.send(message_outgoing)  # send outgoing message
@@ -63,14 +61,17 @@ if __name__ == "__main__":
     # listen for contact
     serverSocket.listen(1)
 
-    username_server = ""
-    while len(username_server) > 10 or len(username_server) <= 0:
-        username_server = raw_input("Enter your chat username (1-10 chars): ")
+    username_server = "SERVER"
+    #while len(username_server) > 10 or len(username_server) <= 0:
+        #username_server = raw_input("Enter your chat username (1-10 chars): ")
+    print("\n----------CHAT APPLICATION: SERVER ONLINE----------\n")
 
-    print("\nChat server is ready!\n")
+    print("Chat server is ready!\n")
 
     while 1:
         connectionSocket, address = serverSocket.accept()  # new socket for chat
+        print("----------connected to client----------")
+
         print("Connected on address {}".format(address))
 
 

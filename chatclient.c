@@ -55,6 +55,7 @@ void connect_socket(int socket_chat, struct addrinfo * serverAddr) {
 }
 
 void exchangeNames(int socket_chat, char* username_client, char* username_server) {
+
     int send_client_username = send(socket_chat, username_client, strlen(username_client), 0);
     int get_server_username = recv(socket_chat, username_server, 10, 0);
 }
@@ -69,12 +70,13 @@ void chat(int socket_chat, char * username_client, char * username_server) {
     memset(incoming_msg, 0, sizeof(incoming_msg));
     memset(outgoing_msg, 0, sizeof(outgoing_msg));
 
-
+	printf("----------connected to server----------\n");
     while(1){
-        printf("\nInput message: ");
+		printf("%s> ", username_client);
         fgets(outgoing_msg ,500, stdin);
-
-        if (strcmp(outgoing_msg, "\\quit\n") == 0){
+		
+		
+        if (strcmp(outgoing_msg, "\\quit") == 0){
             break;
         }
 
@@ -97,7 +99,7 @@ void chat(int socket_chat, char * username_client, char * username_server) {
             break;
         }
         else{
-            printf("%s> %s\n", username_server, incoming_msg);
+            printf("\n%s> %s\n\n", username_server, incoming_msg);
         }
 
         memset(incoming_msg, 0, sizeof(incoming_msg));
@@ -114,13 +116,21 @@ void chat(int socket_chat, char * username_client, char * username_server) {
         printf("\nError: Incorrect arguments\nCorrect format: ./chatclient [FLIP2] [Port#]\n");
         exit(1);
     }
-
+	printf("\n----------CHAT APPLICATION: CLIENT LOGIN----------\n");
     char username_client [10]; // user supplied username
     char username_server [10]; // server username
 
 	//get username from client user
-    printf("Enter your chat username (1-10 chars): ");
-    scanf("%s", username_client);
+    printf("\nEnter your chat username (1-10 chars): ");
+    fgets(username_client, 10, stdin);
+	printf("\n");
+	//remove newline char
+	size_t len = strlen(username_client);
+	if (len > 0 && username_client[len-1] == '\n') {
+		username_client[--len] = '\0';
+	}
+	
+	
 
     struct addrinfo* serverAddr = createAddress(argv[1], argv[2]);
 
