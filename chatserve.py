@@ -27,7 +27,7 @@ def chat(chatConnection, client_username, server_username):
             message_outgoing = raw_input("{}> ".format(server_username))
 
         if message_outgoing == "\quit":
-            print("\n----------Ending chat connection...----------\n----------Waiting for new chat connection...----------\n")
+            print("\n----------Ending chat connection----------\n----------Waiting for new chat connection----------\n")
             break
 
         chatConnection.send(message_outgoing)  # send outgoing message

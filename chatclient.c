@@ -76,7 +76,7 @@ void chat(int socket_chat, char * username_client, char * username_server) {
         fgets(outgoing_msg ,500, stdin);
 		
 		
-        if (strcmp(outgoing_msg, "\\quit") == 0){
+        if (strcmp(outgoing_msg, "\\quit\n") == 0){
             break;
         }
 
@@ -95,7 +95,7 @@ void chat(int socket_chat, char * username_client, char * username_server) {
             exit(1);
         }
         else if (status == 0){
-            printf("\nChat ended by server.\n");
+            printf("\n----------chat ended by server.----------\n");
             break;
         }
         else{
@@ -107,7 +107,7 @@ void chat(int socket_chat, char * username_client, char * username_server) {
     }
 
     close(socket_chat);
-    printf("\nConnection to server - CLOSED\n");
+    printf("----------Connection to server: CLOSED----------\n");
 }
 
 // MAIN FUNCTION ------------------------------
